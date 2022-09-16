@@ -13,7 +13,6 @@ spacy
 transformers
 sentencepiece
 tqdm
-neuralcoref
 argparse
 scikit-learn
 pytest
