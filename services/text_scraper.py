@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 
 test_url = 'https://www.focus.de/panorama/welt/abschied-queen/aktuelle-entwicklungen-im-newsticker-harry-feiert-traurigen-geburtstag-mega-operation-vor-queen-begraebnis_id_142949737.html'
 test_url2 = 'https://medium.com/a-microbiome-scientist-at-large/why-cant-babies-drink-water-13b22c7ac721'
+test_url3 = 'https://www.transfermarkt.de/mazraoui-bdquo-war-ein-sehr-guter-start-von-mir-beim-fc-bayern-ldquo-ndash-spielte-264-von-900-minuten/view/news/411376'
+
 
 class TextScraper:
 
