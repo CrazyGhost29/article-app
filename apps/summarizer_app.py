@@ -17,7 +17,7 @@ def app():
 
     configuration = st.checkbox("Konfigurieren")
 
-    selection_sens = 2
+    selection_sens = 3
     selection_ratio = 0.1
 
     if configuration:
@@ -62,7 +62,7 @@ def app():
                         st.text_area("Anpassen:", value=result_ratio, height=500)
                 else:
                     result_sens = summarizer.summarize_sens(text, selection_sens)
-                    st.text_area("Anpassen:", value=result_sens, height=500)
+                    st.text_area("Anpassen:", value=input_url + "\n\n" + result_sens, height=500)
 
                 st.success("Zussammenfassung abgeschlossen!")
 
