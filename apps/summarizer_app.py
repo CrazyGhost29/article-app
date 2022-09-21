@@ -4,6 +4,12 @@ import time
 import numpy as np
 import streamlit as st
 
+@st.cache(hash_funcs={"MyUnhashableClass": lambda _: None})
+def load_summarizer():
+    return TextSummarizer()
+def load_scraper():
+    return TextScraper()
+
 summarizer = TextSummarizer()
 scraper = TextScraper()
 
@@ -11,9 +17,31 @@ def app():
     st.title("Artikelzusammenfassung")
 
     
-
+    url_list = []
+    text_list = []
     #text = st.text_input("Text einfügen")
-    input_url = st.text_input("URL einfügen")
+    for x in range(5):
+        if x == 0:
+            input_url = st.text_input("URL einfügen", key = x)
+            url_list.append(input_url)
+        elif url_list[x-1] == "":
+            break
+        else:
+            input_url = st.text_input("URL einfügen", key = x)
+            url_list.append(input_url)
+    
+    for x in range(5):
+        if x == 0:
+            input_text = st.text_input("Text einfügen", key = x+5)
+            text_list.append(input_text)
+        elif text_list[x-1] == "":
+            break
+        else:
+            input_text = st.text_input("Text einfügen", key = x+5)
+            text_list.append(input_text)
+
+
+    #input_url = st.text_input("URL einfügen")
 
     configuration = st.checkbox("Konfigurieren")
 
@@ -46,28 +74,49 @@ def app():
 
         #with st.spinner("lädt..."):
         #    time.sleep(3)
-        try:
-            text = scraper.getdata(input_url)
-        except Exception as error:
-            st.error(f"URL konnte nicht umgewandelt werden...\nFehlercode: {error}")
-        
-        if text is not None:
-            try:
-                if configuration:
-                    if summarization_type == "Sätze":
-                        result_sens = summarizer.summarize_sens(text, selection_sens)
+        for y in url_list:
+            if y != "":
+                try:
+                    url_text = scraper.getdata(y)
+                except Exception as error:
+                    st.error(f"URL konnte nicht umgewandelt werden...\nFehlercode: {error}")
+            
+            
+                try:
+                    if configuration:
+                        if summarization_type == "Sätze":
+                            result_sens = summarizer.summarize_sens(url_text, selection_sens)
+                            st.text_area("Anpassen:", value=y + "\n\n" + result_sens, height=500)
+                        elif summarization_type == "Ratio":
+                            result_ratio = summarizer.summarize_ratio(url_text, selection_ratio)
+                            st.text_area("Anpassen:", value=y + "\n\n" + result_ratio, height=500)
+                    else:
+                        result_sens = summarizer.summarize_sens(url_text, selection_sens)
+                        st.text_area("Anpassen:", value=y + "\n\n" + result_sens, height=500)
+
+                    st.success("Zussammenfassung abgeschlossen!")
+
+                except Exception as error:
+                    st.error(f"Artikel konnte nicht zusammengefasst werden...\nFehlercode: {error}")
+
+        for z in text_list:
+            if z != "":
+                try:
+                    if configuration:
+                        if summarization_type == "Sätze":
+                            result_sens = summarizer.summarize_sens(z, selection_sens)
+                            st.text_area("Anpassen:", value=result_sens, height=500)
+                        elif summarization_type == "Ratio":
+                            result_ratio = summarizer.summarize_ratio(z, selection_ratio)
+                            st.text_area("Anpassen:", value=result_ratio, height=500)
+                    else:
+                        result_sens = summarizer.summarize_sens(z, selection_sens)
                         st.text_area("Anpassen:", value=result_sens, height=500)
-                    elif summarization_type == "Ratio":
-                        result_ratio = summarizer.summarize_ratio(text, selection_ratio)
-                        st.text_area("Anpassen:", value=result_ratio, height=500)
-                else:
-                    result_sens = summarizer.summarize_sens(text, selection_sens)
-                    st.text_area("Anpassen:", value=input_url + "\n\n" + result_sens, height=500)
 
-                st.success("Zussammenfassung abgeschlossen!")
+                    st.success("Zussammenfassung abgeschlossen!")
 
-            except Exception as error:
-                st.error(f"Artikel konnte nicht zusammengefasst werden...\nFehlercode: {error}")
+                except Exception as error:
+                    st.error(f"Artikel konnte nicht zusammengefasst werden...\nFehlercode: {error}")
 
         #progress_bar = st.progress(0)
 
