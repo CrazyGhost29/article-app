@@ -40,8 +40,8 @@ class TextScraper:
                         #print("***: "+refined_space)
                         scraped_lines.append(refined_space)
         
-        elif soup.find('article', {"class":"inf-article-detail"}) is not None:
-            for data in soup.find('article', {"class":"inf-article-detail"}).find_all('p', {"class":"inf-text--medium-sec"}, recursive = False):
+        else:
+            for data in soup.find_all('p'):
                 raw = data.get_text(strip=True)
                 refined_l = raw.lstrip()
                 refined_r = refined_l.rstrip()
