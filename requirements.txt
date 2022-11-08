@@ -10,7 +10,6 @@ summarizer==0.0.7
 --find-links https://download.pytorch.org/whl/torch_stable.html
 torch==1.12.1+cpu
 
-re
 bas64
 uuid
 datetime
