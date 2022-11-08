@@ -124,7 +124,7 @@ class TextScraper:
             domain = "Medium"
             title = soup.find('div', class_='hz ia ib ic id').div.find('h1', class_='pw-post-title').get_text(strip=True)
         #6
-        if "inpactmedia.com" in url:
+        elif "inpactmedia.com" in url:
             for data in soup.find('div', {"class":"text-content"}).find_all("p", recursive = False):
                 raw = data.get_text(strip=True)
                 refined_l = raw.lstrip()
@@ -137,7 +137,7 @@ class TextScraper:
             domain = "Inpactmedia"
             title = soup.find('h1', class_='page-title').get_text(strip=True)
         #7
-        if "behoerden-spiegel.de" in url:
+        elif "behoerden-spiegel.de" in url:
             for data in soup.find('div', {"class":"td-post-content"}).find_all("p", recursive = False):
                 raw = data.get_text(strip=True)
                 refined_l = raw.lstrip()
@@ -150,7 +150,7 @@ class TextScraper:
             domain = "Behörden Spiegel"
             title = soup.find('h1', class_='entry-title').get_text(strip=True)
         #8
-        if "omr.com" in url:
+        elif "omr.com" in url:
             for data in soup.find('div', {"class":"post-content"}).find_all("p", recursive = False):
                 raw = data.get_text(strip=True)
                 refined_l = raw.lstrip()
@@ -163,13 +163,13 @@ class TextScraper:
             domain = "OMR"
             title = soup.find('h1', class_='text-h3').get_text(strip=True)
         #9 --- der Request kommt an den cookie einstellungen nicht vorbei
-        if "t3n.de" in url:
+        elif "t3n.de" in url:
             scraped_lines = ["REQUEST UNSUCCESSFUL"]
             domain = "t3n"
             title = "None"
             print("Titel: " + title)
         #10
-        if "1e9.community" in url:
+        elif "1e9.community" in url:
             for data in soup.find_all("p")[:-2]:
                 if data.em:
                     continue
@@ -184,7 +184,7 @@ class TextScraper:
             domain = "1E9 Community"
             title = soup.find('h1').get_text(strip=True)
         #11
-        if "techcrunch.com" in url:
+        elif "techcrunch.com" in url:
             for data in soup.find('div', {"class":"article-content"}).find_all("p", recursive = False):
                 raw = data.get_text(strip=True)
                 refined_l = raw.lstrip()
@@ -198,7 +198,7 @@ class TextScraper:
             title = soup.find('h1', class_='article__title').get_text(strip=True)
             print("Titel: " + title)
         #12
-        if "marktechpost.com" in url:
+        elif "marktechpost.com" in url:
             for data in soup.find('div', {"class":"td-post-content"}).find_all("p", recursive = False):
                 raw = data.get_text(strip=True)
                 refined_l = raw.lstrip()
@@ -212,7 +212,7 @@ class TextScraper:
             title = soup.find('div', class_='td-post-header').find('h1').get_text(strip=True)
             print("Titel: " + title)
         #13
-        if "it-zoom.de" in url:
+        elif "it-zoom.de" in url:
             for data in soup.find('div', class_="news-text-wrap").find_all("p", class_="bodytext"):
                 raw = data.get_text(strip=True)
                 refined_l = raw.lstrip()
@@ -226,13 +226,13 @@ class TextScraper:
             title = soup.find('h1', itemprop='headline').get_text(strip=True)
             print("Titel: " + title)
         #14 --- PAYWALL
-        if "handelsblatt.com" in url:
+        elif "handelsblatt.com" in url:
             scraped_lines = ["PAYWALL"]
             domain = "Handelsblatt"
             title = soup.find('span', class_='vhb-headline--onecolumn').get_text(strip=True)
             print("Titel: " + title)
         #15 --- Text Deutsch und englisch...
-        if "windkraft-journal.de" in url:
+        elif "windkraft-journal.de" in url:
             for data in soup.find('div', class_="post_content").find_all("p", recursive=False):
                 raw = data.get_text(strip=True)
                 refined_l = raw.lstrip()
@@ -246,7 +246,7 @@ class TextScraper:
             title = soup.find('h1', class_='entry-title').get_text(strip=True)
             print("Titel: " + title)
         #16
-        if "meinbezirk.at" in url:
+        elif "meinbezirk.at" in url:
             for data in soup.find('div', id='content-main').find_all("p", recursive=True)[:-3]:
                 raw = data.get_text(strip=True)
                 refined_l = raw.lstrip()
