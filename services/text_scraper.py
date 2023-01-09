@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 import chromedriver_autoinstaller
 from selenium.webdriver.common.by import By
 
@@ -68,7 +69,7 @@ test_url60 = ''
 test_url61 = ''
 test_url62 = ''
 
-chromedriver_autoinstaller.install()
+# chromedriver_autoinstaller.install()
 selenium_list = ["computerwoche.de", "t3n.de", "golem.de", "itp.net"]
 
 
