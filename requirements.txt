@@ -11,6 +11,8 @@ summarizer==0.0.7
 torch==1.12.1+cpu
 
 selenium
+seleniumbase
+webdriver_manager
 chromedriver_autoinstaller
 uuid
 datetime
