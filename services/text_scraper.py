@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 import chromedriver_autoinstaller
 from selenium.webdriver.common.by import By
 
@@ -71,6 +72,9 @@ test_url62 = ''
 
 # chromedriver_autoinstaller.install()
 selenium_list = ["computerwoche.de", "t3n.de", "golem.de", "itp.net"]
+chrome_options = Options()
+def get_driver():
+    return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
 
 class TextScraper:
@@ -81,9 +85,9 @@ class TextScraper:
     def getdata(self, url):
         if any(dom in url for dom in selenium_list):
             print("Selenium")
-            chrome_options = Options()
-            # chrome_options.add_argument("--headless")
-            driver = webdriver.Chrome(options=chrome_options)
+            chrome_options.add_argument("--headless")
+            # driver = webdriver.Chrome(options=chrome_options)
+            driver = get_driver()
         else:
             print("Request")
             r = requests.get(url)
