@@ -1,7 +1,7 @@
 beautifulsoup4==4.11.1
 bert_extractive_summarizer==0.10.1
 docxtpl==0.16.4
-numpy==1.21.5
+numpy==1.23.5
 requests==2.28.1
 streamlit==1.13.0
 streamlit_option_menu==0.3.2
@@ -10,6 +10,8 @@ summarizer==0.0.7
 --find-links https://download.pytorch.org/whl/torch_stable.html
 torch==1.12.1+cpu
 
+selenium
+chromedriver_autoinstaller
 uuid
 datetime
 spacy

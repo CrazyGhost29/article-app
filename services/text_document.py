@@ -3,6 +3,7 @@ import base64
 import uuid
 import re
 from datetime import date
+import streamlit as st
 
 class DocumentCreator:
     def __init__(self):
@@ -18,8 +19,12 @@ class DocumentCreator:
         for x in range(10):
             for y in range(10):
                 if "url{}_{}".format(x, y) in urls and urls["url{}_{}".format(x, y)] != "":
-                    url_con["url{}_{}".format(x, y)] = RichText("")
-                    url_con["url{}_{}".format(x, y)].add(domains["domain{}_{}".format(x, y)], url_id=doc.build_url_id(urls["url{}_{}".format(x, y)]))
+                    try:
+                        url_con["url{}_{}".format(x, y)] = RichText("")
+                        url_con["url{}_{}".format(x, y)].add(domains["domain{}_{}".format(x, y)], url_id=doc.build_url_id(urls["url{}_{}".format(x, y)]))
+                    except Exception as error:
+                        st.error(f"Domain nicht errreicht...\nFehlercode: {error}")
+
 
         context = url_con | topics | titles | summarys | date_
         doc.render(context)

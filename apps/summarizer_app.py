@@ -108,6 +108,10 @@ def app():
                             )
                     except Exception as error:
                         st.error(f"Artikel konnte nicht zusammengefasst werden...\nFehlercode: {error}")
+
+                    print(urls)
+                    print(texts)
+                    print(summarys)
         document.documentify(topics, titles, summarys, urls, domains)
         st.session_state.clicked = True
         return
