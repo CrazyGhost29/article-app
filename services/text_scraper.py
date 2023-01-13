@@ -3,9 +3,13 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import NoSuchElementException
 from webdriver_manager.chrome import ChromeDriverManager
 import chromedriver_autoinstaller
 from selenium.webdriver.common.by import By
+import time
 
 test_url = 'https://www.heise.de/news/Stable-Diffusion-Stability-AI-auf-Kurs-mit-101-Millionen-US-Dollar-Finanzierung-7313243.html'
 test_url2 = 'https://medium.com/a-microbiome-scientist-at-large/why-cant-babies-drink-water-13b22c7ac721'
@@ -85,7 +89,7 @@ class TextScraper:
     def getdata(self, url):
         if any(dom in url for dom in selenium_list):
             print("Selenium")
-            chrome_options.add_argument("--headless")
+            # chrome_options.add_argument("--headless")
             # driver = webdriver.Chrome(options=chrome_options)
             driver = get_driver()
         else:
@@ -439,22 +443,31 @@ class TextScraper:
             domain = "Volksfreund"
             title = soup.find('span', class_='park-article__headline').get_text(strip=True)
             print("Titel: " + title)
-        #26 Klappt mit Selenium
+        #26 Klappt mit Selenium -- Problemsolving nötig
         elif "golem.de" in url:
             driver.get(url)
-            driver.implicitly_wait(1)
-            driver.switch_to.frame("sp_message_iframe_689342")
-            driver.find_element(By.XPATH, "//*[@title='Zustimmen und weiter']").click()
-            driver.implicitly_wait(1)
-            driver.switch_to.parent_frame()
+            # time.sleep(30)
+            try:
+                driver.implicitly_wait(5)
+                # WebDriverWait(driver, 10).until(EC.frame_to_be_available_and_switch_to_it(driver.find_element(By.XPATH, "//iframe[@id='sp_message_iframe_689342']")))
+                driver.switch_to.frame("sp_message_iframe_689342")
+                driver.find_element(By.XPATH, "//*[@title='Zustimmen und weiter']").click()
+                driver.switch_to.parent_frame()
+            except: pass
+            # time.sleep(30)
+            driver.implicitly_wait(5)
+            # WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,  "//*[@class='formatted']/p")))
             data = driver.find_elements(By.XPATH,  "//*[@class='formatted']/p")
+            # data = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,  "//*[@class='formatted']/p"))).find_elements(By.XPATH,  "//*[@class='formatted']/p")
             print(len(data))
             for element in data:
                 if element.text == "":
                     continue
                 scraped_lines.append(element.text)
             domain = "Golem"
+            # WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//*[@class='dh1 head5']")))
             title = driver.find_element(By.XPATH, "//*[@class='dh1 head5']").text
+            # title = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//*[@class='dh1 head5']"))).find_element(By.XPATH, "//*[@class='dh1 head5']").text
             driver.quit()
             print("Titel: " + title)
         #27
