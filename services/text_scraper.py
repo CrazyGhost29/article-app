@@ -68,11 +68,31 @@ test_url54 = 'https://www.sciencenews.org/article/brain-implant-reads-peoples-th
 test_url55 = 'https://www.silicon.de/41702900/wie-ki-devops-prozesse-optimieren-kann'
 test_url56 = 'https://www.ip-insider.de/was-sind-microservices-und-wo-liegen-ihre-vorteile-a-46f9d950db50006737242a5df93f7159/'
 test_url57 = 'https://www.presseportal.de/pm/166985/5378932'
-test_url58 = ''
-test_url59 = ''
-test_url60 = ''
-test_url61 = ''
-test_url62 = ''
+test_url58 = 'https://www.bundeswehr.de/de/aktuelles/meldungen/bundeswehr-testet-ki-gestuetztes-system-gelaendeaufklaerung-5540128'
+test_url59 = 'https://www.br.de/nachrichten/netzwelt/was-ist-openai-die-firma-hinter-dem-ki-hype,TPWTwQy'
+test_url60 = 'https://www.watson.ch/digital/analyse/560741870-wissenschaftlerin-aus-zuerich-warnt-vor-chatgpt-ki-faelscht-quellen'
+test_url61 = 'https://www.boersen-zeitung.de/finanzen-technik/deutschland-will-im-ki-wettrennen-boden-gutmachen-5d6e8284-5a07-11ed-8d32-0f61bd5f1299'
+test_url62 = 'https://www.therobotreport.com/intel-labs-introduces-open-source-simulator-for-ai/'
+test_url63 = 'https://www.gew.de/aktuelles/detailseite/big-data-in-der-bildung-1'
+test_url64 = 'https://www.netzpiloten.de/world-digital-competitiveness-ranking-deutschland-auf-platz-19/'
+test_url65 = 'https://www.infopoint-security.de/cybersecurity-2023-die-bedrohungen-nehmen-zu-aber-die-best-practises-haben-sich-bewaehrt/a32987/'
+test_url66 = 'https://www.ots.at/presseaussendung/OTO_20221212_OTO0001/ki-unterstuetztes-datenprodukt-wertet-standortanalysen-auf-digitalen-landkarten-auf-bild'
+test_url67 = 'https://www.finanznachrichten.de/nachrichten-2022-12/57839593-eumetsat-mit-dem-heutigen-start-der-naechsten-generation-von-wettersatelliten-beginnt-eine-neue-aera-der-wettervorhersage-004.htm'
+test_url68 = 'https://us.acrofan.com/detail.php?number=771062'
+test_url69 = 'https://www.geo.de/natur/tierwelt/chronischer-stress-kann-sich-auf-hunde-uebertragen-33096438.html'
+test_url70 = 'https://www.helpnetsecurity.com/2022/12/14/delinea-devops-secrets-vault-enhancements/'
+test_url71 = 'https://devops.com/cloudbees-survey-sees-vsm-driving-digital-transformation/'
+test_url72 = ''
+test_url73 = ''
+test_url74 = ''
+test_url75 = ''
+test_url76 = ''
+test_url77 = ''
+test_url78 = ''
+test_url79 = ''
+test_url80 = ''
+test_url81 = ''
+test_url82 = ''
 
 # chromedriver_autoinstaller.install()
 selenium_list = ["computerwoche.de", "t3n.de", "golem.de", "itp.net"]
@@ -443,7 +463,7 @@ class TextScraper:
             domain = "Volksfreund"
             title = soup.find('span', class_='park-article__headline').get_text(strip=True)
             print("Titel: " + title)
-        #26 Klappt mit Selenium -- Problemsolving nötig
+        #26 Selenium -- Problemsolving nötig - Webdriver Import Bug - Fix durch Developer?
         elif "golem.de" in url:
             driver.get(url)
             # time.sleep(30)
@@ -688,13 +708,13 @@ class TextScraper:
         elif "bmi.bund.de" in url:
             scraped_lines = ["ACCESS DENIED"]
             domain = "BMI Bund"
-            title = "403 Forbidden"
+            title = "ACCESS DENIED - 403 Forbidden"
             print("Titel: " + title)
         #43
         elif "bwi.de" in url:
             scraped_lines = ["ACCESS DENIED"]
             domain = "BWI Intern"
-            title = "403 Forbidden"
+            title = "ACCESS DENIED - 403 Forbidden"
             print("Titel: " + title)
         #44
         elif "zdnet.de" in url:
@@ -799,13 +819,13 @@ class TextScraper:
         elif "bmbf.de" in url:
             scraped_lines = ["ACCESS DENIED"]
             domain = "BMBF Bund"
-            title = "403 Forbidden"
+            title = "ACCESS DENIED - 403 Forbidden"
             print("Titel: " + title)
         #52
         elif "thw.de" in url:
             scraped_lines = ["ACCESS DENIED"]
             domain = "THW Bund"
-            title = "403 Forbidden"
+            title = "ACCESS DENIED - 403 Forbidden"
             print("Titel: " + title)
         #53
         elif "notebookcheck.com" in url:
@@ -878,8 +898,8 @@ class TextScraper:
             title = soup.find('h1').get_text(strip=True)
             print("Titel: " + title)
         #58
-        elif "wiwo.de" in url:
-            for data in soup.find('div', {"class":"o-article__content"}).find_all('p', recursive=-1):
+        elif "bundeswehr.de" in url:
+            for data in soup.find('div', {"class":"c-rte c-rte--content"}).find_all('p', recursive=False):
                 raw = data.get_text(strip=True)
                 refined_l = raw.lstrip()
                 refined_r = refined_l.rstrip()
@@ -888,12 +908,12 @@ class TextScraper:
                     if "\n" not in refined_space.split():
                         #print("***: "+refined_space)
                         scraped_lines.append(refined_space)
-            domain = "WirtschaftsWoche"
-            title = soup.find('h1').get_text(strip=True)
+            domain = "Bundeswehr"
+            title = soup.find('h1', class_='content-header-article__headline').get_text(strip=True)
             print("Titel: " + title)
         #59
-        elif "wiwo.de" in url:
-            for data in soup.find('div', {"class":"o-article__content"}).find_all('p', recursive=-1):
+        elif "br.de" in url:
+            for data in soup.find('div', {"class":"c-jiOdGk"}).find_all('p', recursive=False):
                 raw = data.get_text(strip=True)
                 refined_l = raw.lstrip()
                 refined_r = refined_l.rstrip()
@@ -902,12 +922,12 @@ class TextScraper:
                     if "\n" not in refined_space.split():
                         #print("***: "+refined_space)
                         scraped_lines.append(refined_space)
-            domain = "WirtschaftsWoche"
-            title = soup.find('h2', class_='c-headline--article').get_text(strip=True)
+            domain = "BR24"
+            title = soup.find('h2', class_='c-hryGkG').get_text(strip=True)
             print("Titel: " + title)
         #60
-        elif "wiwo.de" in url:
-            for data in soup.find('div', {"class":"o-article__content"}).find_all('p', recursive=-1):
+        elif "watson.ch" in url:
+            for data in soup.find('div', {"class":"watson-story__content"}).find_all('p', recursive=False):
                 raw = data.get_text(strip=True)
                 refined_l = raw.lstrip()
                 refined_r = refined_l.rstrip()
@@ -916,10 +936,160 @@ class TextScraper:
                     if "\n" not in refined_space.split():
                         #print("***: "+refined_space)
                         scraped_lines.append(refined_space)
-            domain = "WirtschaftsWoche"
-            title = soup.find('h2', class_='c-headline--article').get_text(strip=True)
+            domain = "Watson"
+            title = soup.find('h2', class_='watson-snippet__title').get_text(strip=True)
             print("Titel: " + title)
         #61
+        elif "boersen-zeitung.de" in url:
+            for data in soup.find('div', {"class":"u-article-body"}).find_all('p', recursive=False):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "Börsen-Zeitung"
+            title = soup.find('h1', class_='u-article-headline').get_text(strip=True)
+            print("Titel: " + title)
+        #62
+        elif "therobotreport.com" in url:
+            scraped_lines = ["ACCESS DENIED"]
+            domain = "The Robotreport"
+            title = "ACCESS DENIED - 403 Forbidden"
+            print("Titel: " + title)
+        #63
+        elif "gew.de" in url:
+            for data in soup.find_all('p', class_='Flietext'):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "Gewerkschaft Erziehung und Wissenschaft"
+            title = soup.find('h1').get_text(strip=True)
+            print("Titel: " + title)
+        #64
+        elif "netzpiloten.de" in url:
+            for data in soup.find('div', {"class":"entry-content"}).find_all('p', recursive=False):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "Netzpiloten"
+            title = soup.find('h1', class_='entry-title').get_text(strip=True)
+            print("Titel: " + title)
+        #65
+        elif "infopoint-security.de" in url:
+            for data in soup.find('div', {"id":"article"}).find_all('p', recursive=True):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 10:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "Infopoint Security"
+            title = soup.find('h1', class_='title').get_text(strip=True)
+            print("Titel: " + title)
+        #66
+        elif "ots.at" in url:
+            for data in soup.find('div', {"class":"content"}).find_all('p', recursive=False)[:-1]:
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "OTS"
+            title = soup.find('h1').get_text(strip=True)
+            print("Titel: " + title)
+        #67
+        elif "finanznachrichten.de" in url:
+            for data in soup.find('div', {"id":"artikelTextPuffer"}).find_all('p', recursive=False):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if refined_space.startswith("Diese Pressemitteilung"):
+                    continue
+                if refined_space.startswith("Weitere Informationen"):
+                    break
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "FinanzNachrichten"
+            title = soup.find('h1', class_='article--headline').get_text(strip=True)
+            print("Titel: " + title)
+        #68
+        elif "us.acrofan.com" in url:
+            for data in soup.find('div', {"itemprop":"articleBody"}).find_all('p', recursive=False):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "acrofan"
+            title = soup.find('h1').get_text(strip=True)
+            print("Titel: " + title)
+        #69
+        elif "geo.de" in url:
+            for data in soup.find('div', {"class":"article__body"}).find_all('p', recursive=False):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "Geo"
+            title = soup.find('span', class_='title__headline').get_text(strip=True)
+            print("Titel: " + title)
+        #70
+        elif "helpnetsecurity.com" in url:
+            for data in soup.find('div', {"class":"entry-content"}).find_all('p', recursive=False):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "HelpNetSecurity"
+            title = soup.find('h1', class_='entry-title').get_text(strip=True)
+            print("Titel: " + title)
+        #71
+        elif "devops.com" in url:
+            for data in soup.find('div', {"class":"entry-content"}).find_all('p', recursive=False):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "DevOps"
+            title = soup.find('h1', class_='entry-title').get_text(strip=True)
+            print("Titel: " + title)
+        #72
         elif "wiwo.de" in url:
             for data in soup.find('div', {"class":"o-article__content"}).find_all('p', recursive=-1):
                 raw = data.get_text(strip=True)
@@ -933,7 +1103,133 @@ class TextScraper:
             domain = "WirtschaftsWoche"
             title = soup.find('h2', class_='c-headline--article').get_text(strip=True)
             print("Titel: " + title)
-        #62
+        #73
+        elif "wiwo.de" in url:
+            for data in soup.find('div', {"class":"o-article__content"}).find_all('p', recursive=-1):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "WirtschaftsWoche"
+            title = soup.find('h2', class_='c-headline--article').get_text(strip=True)
+            print("Titel: " + title)
+        #74
+        elif "wiwo.de" in url:
+            for data in soup.find('div', {"class":"o-article__content"}).find_all('p', recursive=-1):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "WirtschaftsWoche"
+            title = soup.find('h2', class_='c-headline--article').get_text(strip=True)
+            print("Titel: " + title)
+        #75
+        elif "wiwo.de" in url:
+            for data in soup.find('div', {"class":"o-article__content"}).find_all('p', recursive=-1):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "WirtschaftsWoche"
+            title = soup.find('h2', class_='c-headline--article').get_text(strip=True)
+            print("Titel: " + title)
+        #76
+        elif "wiwo.de" in url:
+            for data in soup.find('div', {"class":"o-article__content"}).find_all('p', recursive=-1):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "WirtschaftsWoche"
+            title = soup.find('h2', class_='c-headline--article').get_text(strip=True)
+            print("Titel: " + title)
+        #77
+        elif "wiwo.de" in url:
+            for data in soup.find('div', {"class":"o-article__content"}).find_all('p', recursive=-1):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "WirtschaftsWoche"
+            title = soup.find('h2', class_='c-headline--article').get_text(strip=True)
+            print("Titel: " + title)
+        #78
+        elif "wiwo.de" in url:
+            for data in soup.find('div', {"class":"o-article__content"}).find_all('p', recursive=-1):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "WirtschaftsWoche"
+            title = soup.find('h2', class_='c-headline--article').get_text(strip=True)
+            print("Titel: " + title)
+        #79
+        elif "wiwo.de" in url:
+            for data in soup.find('div', {"class":"o-article__content"}).find_all('p', recursive=-1):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "WirtschaftsWoche"
+            title = soup.find('h2', class_='c-headline--article').get_text(strip=True)
+            print("Titel: " + title)
+        #80
+        elif "wiwo.de" in url:
+            for data in soup.find('div', {"class":"o-article__content"}).find_all('p', recursive=-1):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "WirtschaftsWoche"
+            title = soup.find('h2', class_='c-headline--article').get_text(strip=True)
+            print("Titel: " + title)
+        #81
+        elif "wiwo.de" in url:
+            for data in soup.find('div', {"class":"o-article__content"}).find_all('p', recursive=-1):
+                raw = data.get_text(strip=True)
+                refined_l = raw.lstrip()
+                refined_r = refined_l.rstrip()
+                refined_space = refined_r.replace("  ", "")
+                if len(refined_space.split()) > 5:
+                    if "\n" not in refined_space.split():
+                        #print("***: "+refined_space)
+                        scraped_lines.append(refined_space)
+            domain = "WirtschaftsWoche"
+            title = soup.find('h2', class_='c-headline--article').get_text(strip=True)
+            print("Titel: " + title)
+        #82
         elif "wiwo.de" in url:
             for data in soup.find('div', {"class":"o-article__content"}).find_all('p', recursive=-1):
                 raw = data.get_text(strip=True)
