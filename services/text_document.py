@@ -16,7 +16,7 @@ class DocumentCreator:
         date_["date"] = date.today().strftime("%d.%m.%Y")
         
 
-        for x in range(10):
+        for x in range(6):
             for y in range(10):
                 if "url{}_{}".format(x, y) in urls and urls["url{}_{}".format(x, y)] != "":
                     try:

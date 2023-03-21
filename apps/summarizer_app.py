@@ -26,8 +26,8 @@ def app():
     titles = {}
     texts = {}
     summarys = {}
-    st.markdown("Benenne ein Thema und füge darunter bis zu 10 URL'S ein:")
-    for x in range(10):
+    st.markdown("Benenne ein Thema und füge darunter bis zu 10 URL'S ein:") 
+    for x in range(6): #10 mit anderem Template
         if x == 0 or topics["header{}".format(x-1)] != "":
             topics["header{}".format(x)] = st.text_input("THEMA:", key="header{}".format(x))
             for y in range(10):
